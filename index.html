@@ -186,21 +186,25 @@
             data.services = services.join(', ');
             data.timeSlot = selectedSlots.join(', '); // 確保多個時段都能傳送到 LINE
 
+            // --- 🔒 新增安全密鑰 (Payload) ---
+            data.secret_key = "LongTing_940810"; 
+            // -------------------------------
+
             const submitBtn = form.querySelector('button');
             submitBtn.innerText = '正在傳送...';
             submitBtn.disabled = true;
 
-            fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) })
-                .then(() => {
-                    modal.classList.remove('hidden');
-                    form.reset();
-                })
-                .catch(() => alert('發生錯誤，請檢查網路後再試！'))
-                .finally(() => {
-                    submitBtn.innerText = '確認提交預約';
-                    submitBtn.disabled = false;
-                });
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: JSON.stringify(data) 
+            })
+            .then(() => {
+                modal.classList.remove('hidden');
+                form.reset();
+            })
+            .catch(() => alert('發生錯誤，請檢查網路後再試！'))
+            .finally(() => {
+                submitBtn.innerText = '確認提交預約';
+                submitBtn.disabled = false;
+            });
         });
-    </script>
-</body>
-</html>
