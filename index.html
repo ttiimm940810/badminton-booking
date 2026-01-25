@@ -3,168 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>龍羽球 | 專業服務預約系統</title>
+    <title>龍羽球 | 專業預約系統</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
-        .plan-card input:checked + div { border-color: #4f46e5; background-color: #f5f3ff; }
+        .select-card input:checked + div { border-color: #4f46e5; background-color: #f5f3ff; }
     </style>
 </head>
-<body class="bg-[#F8FAFC] text-slate-900 min-h-screen py-12 px-4">
-
+<body class="bg-[#F8FAFC] py-12 px-4">
     <div class="max-w-xl mx-auto">
-        <div class="bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-slate-200/60 overflow-hidden">
-            <div class="h-2 bg-gradient-to-r from-indigo-700 via-indigo-500 to-slate-400"></div>
-            
+        <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-200 overflow-hidden">
+            <div class="h-2 bg-gradient-to-r from-indigo-700 to-slate-400"></div>
             <div class="p-8 md:p-12">
-                <div class="mb-10">
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-2">龍羽球 | 預約系統</h1>
-                    <p class="text-slate-500 font-medium text-sm tracking-widest uppercase">Badminton Professional Service Lab</p>
+                <div class="mb-10 text-center">
+                    <h1 class="text-3xl font-bold text-slate-900 mb-2">龍羽球 | 預約系統</h1>
+                    <p class="text-slate-500 font-medium text-[10px] tracking-widest uppercase">Badminton Professional Lab</p>
                 </div>
 
-                <form id="bookingForm" class="space-y-10">
-                    <section class="space-y-5">
-                        <div class="flex items-center space-x-2 mb-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
-                            <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">聯絡資訊</h2>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form id="bookingForm" class="space-y-8">
+                    <section class="space-y-4">
+                        <div class="flex items-center space-x-2"><span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span><h2 class="text-xs font-bold uppercase text-slate-400 tracking-widest">1. 聯絡資訊</h2></div>
+                        <div class="grid grid-cols-2 gap-4">
                             <input type="text" name="name" required placeholder="姓名" class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all">
                             <input type="tel" name="phone" required placeholder="電話" class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all">
                         </div>
-                        <input type="text" name="lineID" placeholder="Line ID (選填)" class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all">
+                        <input type="text" name="lineID" placeholder="Line ID" required class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all">
                     </section>
 
-                    <section class="space-y-5">
-                        <div class="flex items-center space-x-2 mb-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
-                            <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">選擇課程方案</h2>
-                        </div>
-                        <div class="grid grid-cols-1 gap-4">
-                            <label class="plan-card relative cursor-pointer">
-                                <input type="radio" name="coursePlan" value="體驗課|700" class="sr-only peer" checked>
-                                <div class="p-5 rounded-2xl border-2 border-slate-100 bg-white hover:border-indigo-200 transition-all">
-                                    <div class="flex justify-between items-start mb-1"><h3 class="font-bold text-slate-800">🔹 體驗課</h3><span class="text-indigo-600 font-bold">$700</span></div>
-                                    <p class="text-xs text-slate-500 leading-relaxed">適合檢查握拍、步法等基本功是否正確。</p>
-                                </div>
-                            </label>
-                            <label class="plan-card relative cursor-pointer">
-                                <input type="radio" name="coursePlan" value="單堂課|800" class="sr-only peer">
-                                <div class="p-5 rounded-2xl border-2 border-slate-100 bg-white hover:border-indigo-200 transition-all">
-                                    <div class="flex justify-between items-start mb-1"><h3 class="font-bold text-slate-800">🔹 單堂課</h3><span class="text-indigo-600 font-bold">$800</span></div>
-                                    <p class="text-xs text-slate-500 leading-relaxed">客製化技術訓練，針對殺球、防守單點突破。</p>
-                                </div>
-                            </label>
-                            <label class="plan-card relative cursor-pointer">
-                                <input type="radio" name="coursePlan" value="10堂方案|7500" class="sr-only peer">
-                                <div class="p-5 rounded-2xl border-2 border-slate-100 bg-white hover:border-indigo-200 transition-all relative overflow-hidden">
-                                    <div class="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] px-3 py-1 rounded-bl-xl font-bold uppercase tracking-wider">Most Value</div>
-                                    <div class="flex justify-between items-start mb-1"><h3 class="font-bold text-slate-800">🔹 10 堂方案</h3><span class="text-indigo-600 font-bold">$7500</span></div>
-                                    <p class="text-xs text-slate-500 leading-relaxed">每堂 $750，適合想建立固定訓練節奏的人。</p>
-                                </div>
-                            </label>
+                    <section class="space-y-3">
+                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest">2. 選擇人數</h2>
+                        <div class="grid grid-cols-3 gap-2">
+                            <label class="select-card cursor-pointer"><input type="radio" name="groupSize" value="1on1" class="sr-only peer" checked><div class="p-3 text-center rounded-xl border-2 border-slate-100 bg-white font-bold text-slate-600 text-xs transition-all">👤 1 on 1</div></label>
+                            <label class="select-card cursor-pointer"><input type="radio" name="groupSize" value="1on2" class="sr-only peer"><div class="p-3 text-center rounded-xl border-2 border-slate-100 bg-white font-bold text-slate-600 text-xs transition-all">👥 1 on 2</div></label>
+                            <label class="select-card cursor-pointer"><input type="radio" name="groupSize" value="1on34" class="sr-only peer"><div class="p-3 text-center rounded-xl border-2 border-slate-100 bg-white font-bold text-slate-600 text-xs transition-all">👨‍👩‍👧‍👦 1 on 3~4</div></label>
                         </div>
                     </section>
 
                     <section class="space-y-6">
-                        <div class="flex items-center space-x-2 mb-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
-                            <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">日期與時段選擇</h2>
-                        </div>
+                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest">3. 預約時段 (白天 $300 / 晚上 $450)</h2>
                         <input type="date" name="date" required class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all mb-4">
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="08:00-09:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">08:00-09:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="09:00-10:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">09:00-10:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="10:00-11:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">10:00-11:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="11:00-12:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">11:00-12:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="13:00-14:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">13:00-14:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="14:00-15:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">14:00-15:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="15:00-16:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">15:00-16:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="16:00-17:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">16:00-17:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="17:00-18:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">17:00-18:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="18:00-19:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">18:00-19:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="19:00-20:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">19:00-20:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="20:00-21:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">20:00-21:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="21:00-22:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">21:00-22:00</div></label>
-                            <label class="relative"><input type="checkbox" name="timeSlot" value="22:00-23:00" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 bg-white peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">22:00-23:00</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="08:00-09:00" data-fee="300" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">08-09</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="09:00-10:00" data-fee="300" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">09-10</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="10:00-11:00" data-fee="300" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">10-11</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="11:00-12:00" data-fee="300" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">11-12</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="13:00-14:00" data-fee="300" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">13-14</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="14:00-15:00" data-fee="300" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">14-15</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="15:00-16:00" data-fee="300" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">15-16</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="16:00-17:00" data-fee="300" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">16-17</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="17:00-18:00" data-fee="300" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">17-18</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="18:00-19:00" data-fee="450" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">18-19</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="19:00-20:00" data-fee="450" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">19-20</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="20:00-21:00" data-fee="450" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">20-21</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="21:00-22:00" data-fee="450" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">21-22</div></label>
+                            <label class="relative"><input type="checkbox" name="timeSlot" value="22:00-23:00" data-fee="450" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-slate-900 peer-checked:text-white cursor-pointer transition-all">22-23</div></label>
+                        </div>
+                    </section>
+
+                    <section class="space-y-3">
+                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest">4. 課程方案 (全包價/人)</h2>
+                        <div class="space-y-2">
+                            <label class="select-card block cursor-pointer"><input type="radio" name="coursePlan" value="體驗課" class="sr-only" checked><div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm"><b>🔹 體驗課</b><span class="text-indigo-600 font-bold" id="label-experience">-- /人</span></div></label>
+                            <label class="select-card block cursor-pointer"><input type="radio" name="coursePlan" value="單堂課" class="sr-only"><div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm"><b>🔹 單堂課</b><span class="text-indigo-600 font-bold" id="label-single">-- /人</span></div></label>
+                            <label class="select-card block cursor-pointer"><input type="radio" name="coursePlan" value="10堂方案" class="sr-only"><div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm"><b>🔹 10 堂方案</b><span class="text-indigo-600 font-bold" id="label-ten">-- /人</span></div></label>
                         </div>
                     </section>
 
                     <section class="space-y-4">
-                        <div class="flex items-center space-x-2 mb-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
-                            <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">附加服務</h2>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <label class="flex items-center space-x-3 p-4 bg-slate-50 rounded-2xl cursor-pointer hover:bg-indigo-50 border-2 border-transparent transition-all">
+                        <h2 class="text-xs font-bold uppercase text-slate-400 tracking-widest">5. 附加服務</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center space-x-3 p-4 bg-slate-50 rounded-2xl cursor-pointer hover:bg-indigo-50 transition-all border-2 border-transparent">
                                 <input type="checkbox" name="services" value="球具訂購" class="w-4 h-4 rounded text-indigo-600">
-                                <div class="flex flex-col"><span class="text-sm font-semibold text-slate-700">球具訂購</span><span class="text-[10px] text-slate-400">價格請私訊</span></div>
+                                <span class="text-sm font-semibold text-slate-700">球具訂購</span>
                             </label>
-                            <label class="flex items-center space-x-3 p-4 bg-slate-50 rounded-2xl cursor-pointer hover:bg-indigo-50 border-2 border-transparent transition-all">
+                            <label class="flex items-center space-x-3 p-4 bg-slate-50 rounded-2xl cursor-pointer hover:bg-indigo-50 transition-all border-2 border-transparent">
                                 <input type="checkbox" name="services" value="拉線服務" class="w-4 h-4 rounded text-indigo-600">
-                                <div class="flex flex-col"><span class="text-sm font-semibold text-slate-700">專業拉線服務</span><span class="text-[10px] text-indigo-500 font-medium">加購價：$300</span></div>
+                                <span class="text-sm font-semibold text-slate-700">拉線服務 (+$300)</span>
                             </label>
                         </div>
                     </section>
 
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">備註</label>
-                        <textarea name="note" rows="3" placeholder="特殊需求或細節..." class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all"></textarea>
-                    </div>
+                    <section class="space-y-2">
+                        <h2 class="text-xs font-bold uppercase text-slate-400 tracking-widest ml-1">備註事項</h2>
+                        <textarea name="note" rows="3" placeholder="特殊需求..." class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all text-sm"></textarea>
+                    </section>
 
-                    <button type="submit" class="w-full bg-slate-900 text-white font-bold py-5 rounded-[1.5rem] hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-300 shadow-xl">確認提交預約</button>
+                    <button type="submit" class="w-full bg-slate-900 text-white font-bold py-5 rounded-[1.5rem] hover:bg-indigo-700 transition-all shadow-xl">確認提交預約</button>
                 </form>
             </div>
         </div>
-        <p class="text-center text-slate-400 text-xs mt-8">© 2026 Badminton Service Lab.</p>
     </div>
 
     <div id="successModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm">
-        <div class="bg-white rounded-[2.5rem] p-10 max-w-sm w-full text-center shadow-2xl animate-in fade-in zoom-in duration-300">
-            <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-            </div>
+        <div class="bg-white rounded-[2.5rem] p-10 max-w-sm w-full text-center shadow-2xl">
             <h2 class="text-2xl font-bold text-slate-900 mb-2">預約成功</h2>
-            <p class="text-slate-500 mb-8 text-sm">您的預約已送出，我們將儘速連繫您！</p>
-            <button onclick="location.reload()" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl transition-all">完成</button>
+            <button onclick="location.reload()" class="w-full py-4 bg-indigo-600 text-white font-bold rounded-2xl transition-all">完成</button>
         </div>
     </div>
 
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwlQUyHzsBdxaOQoqYCDaLkkd5HhS16V1644IT1pgevW6g70Opgbak-QvRY8wfKhXTIEg/exec';
         const form = document.getElementById('bookingForm');
-        const modal = document.getElementById('successModal');
+
+        const pricing = {
+            '1on1':  { experience: 700,  single: 800,  ten: 7500 },
+            '1on2':  { experience: 500,  single: 600,  ten: 5500 },
+            '1on34': { experience: 400,  single: 500,  ten: 4500 }
+        };
+
+        function updatePricing() {
+            const size = form.querySelector('input[name="groupSize"]:checked').value;
+            const slots = form.querySelectorAll('input[name="timeSlot"]:checked');
+            const expLabel = document.getElementById('label-experience');
+            const sglLabel = document.getElementById('label-single');
+            const tenLabel = document.getElementById('label-ten');
+            
+            if (slots.length === 0) {
+                expLabel.innerText = "-- /人";
+                sglLabel.innerText = "-- /人";
+                tenLabel.innerText = "-- /人";
+                return 0;
+            }
+
+            let venueFee = 0;
+            slots.forEach(s => venueFee += parseInt(s.getAttribute('data-fee')));
+            const count = slots.length;
+
+            const totalExp = (pricing[size].experience * count) + venueFee;
+            const totalSgl = (pricing[size].single * count) + venueFee;
+            const totalTen = pricing[size].ten + venueFee;
+
+            expLabel.innerText = `$${totalExp}/人`;
+            sglLabel.innerText = `$${totalSgl}/人`;
+            tenLabel.innerText = `$${totalTen}/人`;
+
+            const currentPlan = form.querySelector('input[name="coursePlan"]:checked').value;
+            return (currentPlan === "體驗課") ? totalExp : (currentPlan === "單堂課" ? totalSgl : totalTen);
+        }
+
+        form.addEventListener('change', updatePricing);
 
         form.addEventListener('submit', e => {
             e.preventDefault();
+            const slots = form.querySelectorAll('input[name="timeSlot"]:checked');
+            if (slots.length === 0) {
+                alert("請至少選擇一個預約時段！");
+                return;
+            }
+
             const formData = new FormData(form);
-            const services = [];
-            form.querySelectorAll('input[name="services"]:checked').forEach(cb => services.push(cb.value));
-            const selectedSlots = [];
-            form.querySelectorAll('input[name="timeSlot"]:checked').forEach(cb => selectedSlots.push(cb.value));
-
+            const services = Array.from(form.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value);
             const data = Object.fromEntries(formData.entries());
+            data.totalPrice = updatePricing();
             data.services = services.join(', ');
-            data.timeSlot = selectedSlots.join(', ');
-
-            // 🔒 新增安全密碼
-            data.secret_key = "LongTing_940810"; 
-
-            const submitBtn = form.querySelector('button');
-            submitBtn.innerText = '正在傳送...';
-            submitBtn.disabled = true;
+            data.timeSlot = Array.from(slots).map(cb => cb.value).join(', ');
+            data.secret_key = "LongTing_940810";
 
             fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) })
-            .then(() => {
-                modal.classList.remove('hidden');
-                form.reset();
-            })
-            .catch(() => alert('發生連線錯誤，請稍後再試！'))
-            .finally(() => {
-                submitBtn.innerText = '確認提交預約';
-                submitBtn.disabled = false;
-            });
+            .then(() => { document.getElementById('successModal').classList.remove('hidden'); form.reset(); updatePricing(); });
         });
     </script>
 </body>
