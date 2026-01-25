@@ -30,6 +30,7 @@
                         </div>
                         <input type="text" name="lineID" placeholder="Line ID" required class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all">
                         
+                        
                     </section>
 
                     <section class="space-y-3">
@@ -43,7 +44,7 @@
 
                     <section class="space-y-4">
                         <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">3. 預約時段(4人團班請選2小時) </h2>
-                        <input type="date" name="date" required class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all mb-4">
+                        <input type="date" name="date" id="dateSelector" required class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all mb-4">
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                             <label class="relative"><input type="checkbox" name="timeSlot" value="08:00-09:00" data-index="0" data-fee="370" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">08-09</div></label>
                             <label class="relative"><input type="checkbox" name="timeSlot" value="09:00-10:00" data-index="1" data-fee="370" class="sr-only peer"><div class="px-2 py-2 text-[10px] text-center font-bold rounded-xl border border-slate-200 peer-checked:bg-indigo-600 peer-checked:text-white cursor-pointer transition-all">09-10</div></label>
@@ -63,7 +64,7 @@
                     </section>
 
                     <section class="space-y-3">
-                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">4. 選擇方案 (包含場地費/人)</h2>
+                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">4. 選擇方案 (包含場地費/人 小時)</h2>
                         <div class="space-y-2">
                             <label class="select-card block cursor-pointer"><input type="radio" name="coursePlan" value="體驗課" class="sr-only" checked><div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm"><b>🔹 體驗課</b><span class="text-indigo-600 font-bold" id="label-experience">-- /人</span></div></label>
                             <label class="select-card block cursor-pointer"><input type="radio" name="coursePlan" value="單堂課" class="sr-only"><div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm"><b>🔹 單堂課</b><span class="text-indigo-600 font-bold" id="label-single">-- /人</span></div></label>
@@ -99,7 +100,7 @@
         const pricing = {
             '1on1':  { exp: 700, sgl: 800, ten: 7500, p: 1 },
             '1on2':  { exp: 500, sgl: 600, ten: 5500, p: 2 },
-            '1on4':  { p: 4 } // 4人團班固定價 $600
+            '1on4':  { p: 4 }
         };
 
         function updatePricing() {
@@ -130,6 +131,41 @@
             tenL.innerText = `$${Math.round(tTen)} /人`;
         }
 
+        // 核心邏輯：當日期變更時，抓取已預約時段
+        const dateInput = document.getElementById('dateSelector');
+        dateInput.addEventListener('change', function() {
+            const selectedDate = this.value;
+            if (!selectedDate) return;
+
+            // 呼叫 GAS 的 doGet 獲取已預約時段
+            fetch(`${scriptURL}?date=${selectedDate}`)
+                .then(response => response.json())
+                .then(bookedSlots => {
+                    const checkboxes = form.querySelectorAll('input[name="timeSlot"]');
+                    
+                    checkboxes.forEach(cb => {
+                        const label = cb.closest('label');
+                        const div = cb.nextElementSibling;
+                        
+                        // 先恢復所有格子
+                        cb.disabled = false;
+                        label.style.opacity = "1";
+                        label.style.pointerEvents = "auto";
+                        div.innerText = cb.value.replace(':00', '').replace(':00', '');
+
+                        // 如果時段已被預約，則禁用
+                        if (bookedSlots.includes(cb.value)) {
+                            cb.disabled = true;
+                            cb.checked = false;
+                            label.style.opacity = "0.3";
+                            label.style.pointerEvents = "none";
+                            div.innerText = "已預約";
+                        }
+                    });
+                    updatePricing();
+                });
+        });
+
         form.addEventListener('change', updatePricing);
         
         form.addEventListener('submit', e => {
@@ -156,7 +192,7 @@
             const data = Object.fromEntries(formData.entries());
             data.timeSlot = slots.map(cb => cb.value).join(', ');
             data.services = Array.from(form.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value).join(', ');
-            data.secret_key = "LongTing_940810";
+            data.secret_key = "LongTing_940810"; //
 
             fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) })
             .then(() => { document.getElementById('successModal').classList.remove('hidden'); form.reset(); updatePricing(); });
