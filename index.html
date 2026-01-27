@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>龍羽球 | 彈性預約系統</title>
+    <title>龍羽球 | 智慧預約系統</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
         .select-card input:checked + div { border-color: #4f46e5; background-color: #f5f3ff; }
+        input:disabled + div { opacity: 0.3; pointer-events: none; background-color: #f1f5f9; }
     </style>
 </head>
 <body class="bg-[#F8FAFC] py-12 px-4">
@@ -17,8 +18,8 @@
             <div class="h-2 bg-gradient-to-r from-indigo-700 to-slate-400"></div>
             <div class="p-8 md:p-12">
                 <div class="mb-10 text-center">
-                    <h1 class="text-3xl font-bold text-slate-900 mb-2">龍羽球🏸 - 預約系統</h1>
-                    <p class="text-slate-500 font-medium text-[10px] tracking-widest uppercase">Badminton club</p>
+                    <h1 class="text-3xl font-bold text-slate-900 mb-2">🏸 龍羽球 - 預約系統</h1>
+                    <p class="text-slate-500 font-medium text-[10px] tracking-widest uppercase">Badminton Club</p>
                 </div>
 
                 <form id="bookingForm" class="space-y-8">
@@ -62,7 +63,7 @@
                     </section>
 
                     <section class="space-y-3">
-                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">4. 選擇方案 (包含場地費/人 小時)</h2>
+                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">4. 選擇方案 (包含場地費/人)</h2>
                         <div class="space-y-2">
                             <label class="select-card block cursor-pointer"><input type="radio" name="coursePlan" value="體驗課" class="sr-only" checked><div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm"><b>🔹 體驗課</b><span class="text-indigo-600 font-bold" id="label-experience">-- /人</span></div></label>
                             <label class="select-card block cursor-pointer"><input type="radio" name="coursePlan" value="單堂課" class="sr-only"><div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm"><b>🔹 單堂課</b><span class="text-indigo-600 font-bold" id="label-single">-- /人</span></div></label>
@@ -71,16 +72,26 @@
                     </section>
 
                     <section class="space-y-4">
+                        <div class="flex items-center space-x-2"><span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span><h2 class="text-xs font-bold uppercase text-slate-400 tracking-widest">5. 附加服務與備註</h2></div>
                         <div class="grid grid-cols-2 gap-3">
                             <label class="flex items-center space-x-3 p-4 bg-slate-50 rounded-2xl cursor-pointer border-2 border-transparent transition-all"><input type="checkbox" name="services" value="球具訂購" class="w-4 h-4 rounded text-indigo-600"><span class="text-xs font-semibold text-slate-700">球具訂購</span></label>
                             <label class="flex items-center space-x-3 p-4 bg-slate-50 rounded-2xl cursor-pointer border-2 border-transparent transition-all"><input type="checkbox" name="services" value="拉線服務 (BG65Ti)" class="w-4 h-4 rounded text-indigo-600"><span class="text-xs font-semibold text-slate-700">拉線 (BG65Ti) $320</span></label>
                         </div>
-                        <textarea name="note" rows="2" placeholder="備註事項..." class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all text-xs"></textarea>
+                        
+                        <select name="venue" required class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all text-xs">
+                            <option value="" disabled selected>請選擇練球地區</option>
+                            <option value="北屯">北屯</option><option value="南屯">南屯</option><option value="太平">太平</option><option value="西屯">西屯</option>
+                            <option value="西區">西區</option><option value="東區">東區</option><option value="南區">南區</option><option value="新竹">新竹</option>
+                        </select>
+
+                        <textarea name="note" rows="2" placeholder="如有其他特殊備註請填寫..." class="w-full px-5 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:bg-white focus:border-indigo-500 outline-none transition-all text-xs"></textarea>
                     </section>
 
                     <div class="mt-8">
                         <p class="text-[10px] text-slate-500 text-center mb-3 font-medium">※ 最早可預約日期為一週後</p>
-                        <button type="submit" class="w-full bg-slate-900 text-white font-bold py-5 rounded-[1.5rem] hover:bg-indigo-700 transition-all shadow-xl">確認提交預約</button>
+                        <button type="submit" id="submitBtn" class="w-full bg-slate-900 text-white font-bold py-5 rounded-[1.5rem] hover:bg-indigo-700 transition-all shadow-xl flex items-center justify-center">
+                            <span>確認提交預約</span>
+                        </button>
                     </div>
                 </form>
             </div>
@@ -99,10 +110,11 @@
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwlQUyHzsBdxaOQoqYCDaLkkd5HhS16V1644IT1pgevW6g70Opgbak-QvRY8wfKhXTIEg/exec';
         const form = document.getElementById('bookingForm');
         const dateInput = document.getElementById('dateSelector');
+        const submitBtn = document.getElementById('submitBtn');
         
         const pricing = {
             '1on1':  { exp: 700, sgl: 800, ten: 7500, p: 1 },
-            '1on2':  { exp: 500, sgl: 600, ten: 5500, p: 2 },
+            '1on2':  { p: 2 },
             '1on4':  { p: 4 }
         };
 
@@ -112,7 +124,6 @@
             const oneWeekLater = new Date();
             oneWeekLater.setDate(today.getDate() + 7);
             const minDateStr = oneWeekLater.toISOString().split('T')[0];
-            
             dateInput.min = minDateStr;
 
             if (plan === "體驗課" || plan === "單堂課") {
@@ -121,25 +132,20 @@
                 const maxDateStr = nextMonth.toISOString().split('T')[0];
                 dateInput.max = maxDateStr;
                 if (dateInput.value > maxDateStr || (dateInput.value < minDateStr && dateInput.value !== "")) {
-                    dateInput.value = "";
-                    resetSlots();
+                    dateInput.value = ""; resetSlots();
                 }
             } else {
                 dateInput.removeAttribute('max');
                 if (dateInput.value < minDateStr && dateInput.value !== "") {
-                    dateInput.value = "";
-                    resetSlots();
+                    dateInput.value = ""; resetSlots();
                 }
             }
         }
 
         function resetSlots() {
             form.querySelectorAll('input[name="timeSlot"]').forEach(cb => {
-                const label = cb.closest('label');
-                cb.disabled = false;
-                label.style.opacity = "1";
-                label.style.pointerEvents = "auto";
-                cb.nextElementSibling.innerText = cb.value.split('-')[0];
+                const label = cb.closest('label'); cb.disabled = false; label.style.opacity = "1";
+                label.style.pointerEvents = "auto"; cb.nextElementSibling.innerText = cb.value.split('-')[0];
             });
             updatePricing();
         }
@@ -150,49 +156,48 @@
             const expL = document.getElementById('label-experience'), sglL = document.getElementById('label-single'), tenL = document.getElementById('label-ten');
             
             if (slots.length === 0) {
-                expL.innerText = "-- /人"; sglL.innerText = "-- /人"; tenL.innerText = "-- /人";
-                return;
+                expL.innerText = "-- /人"; sglL.innerText = "-- /人"; tenL.innerText = "-- /人"; return;
             }
 
             if (size === '1on4') {
-                expL.innerText = "$600 /人"; sglL.innerText = "$600 /人"; tenL.innerText = "$6000 /人";
-                return;
+                expL.innerText = "$600 /人"; sglL.innerText = "$600 /人"; tenL.innerText = "$6000 /人"; return;
+            }
+
+            if (size === '1on2') {
+                let trialTotal = 0, singleTotal = 0;
+                let isNight = slots.some(s => parseInt(s.getAttribute('data-fee')) === 570);
+                slots.forEach(s => {
+                    const fee = parseInt(s.getAttribute('data-fee'));
+                    trialTotal += (fee === 370) ? 540 : 640;
+                    singleTotal += (fee === 370) ? 600 : 685;
+                });
+                expL.innerText = `$${trialTotal} /人`; sglL.innerText = `$${singleTotal} /人`;
+                tenL.innerText = `$${isNight ? 6550 : 5700} /人`; return;
             }
 
             let venueTotal = 0; slots.forEach(s => venueTotal += parseInt(s.getAttribute('data-fee')));
-            const pCount = pricing[size].p;
-            const hourCount = slots.length;
-
+            const pCount = pricing[size].p, hourCount = slots.length;
             const tExp = (pricing[size].exp * hourCount) + (venueTotal / pCount);
             const tSgl = (pricing[size].sgl * hourCount) + (venueTotal / pCount);
             const tTen = pricing[size].ten + (venueTotal * 10 / pCount);
 
-            expL.innerText = `$${Math.round(tExp)} /人`;
-            sglL.innerText = `$${Math.round(tSgl)} /人`;
+            expL.innerText = `$${Math.round(tExp)} /人`; sglL.innerText = `$${Math.round(tSgl)} /人`;
             tenL.innerText = `$${Math.round(tTen)} /人`;
         }
 
         dateInput.addEventListener('change', function() {
             const selectedDate = this.value;
             if (!selectedDate) return;
-
             fetch(`${scriptURL}?date=${selectedDate}`)
                 .then(response => response.json())
                 .then(bookedSlots => {
                     form.querySelectorAll('input[name="timeSlot"]').forEach(cb => {
-                        const label = cb.closest('label');
-                        const div = cb.nextElementSibling;
-                        cb.disabled = false;
-                        label.style.opacity = "1";
-                        label.style.pointerEvents = "auto";
+                        const label = cb.closest('label'), div = cb.nextElementSibling;
+                        cb.disabled = false; label.style.opacity = "1"; label.style.pointerEvents = "auto";
                         div.innerText = cb.value.split('-')[0];
-
                         if (bookedSlots.includes(cb.value)) {
-                            cb.disabled = true;
-                            cb.checked = false;
-                            label.style.opacity = "0.3";
-                            label.style.pointerEvents = "none";
-                            div.innerText = "已預約";
+                            cb.disabled = true; cb.checked = false; label.style.opacity = "0.3";
+                            label.style.pointerEvents = "none"; div.innerText = "已預約";
                         }
                     });
                     updatePricing();
@@ -213,9 +218,11 @@
                 if (slots.length !== 2) { alert("4人團班課程固定為 2 小時，請選取剛好 2 個時段！"); return; }
                 const indices = slots.map(s => parseInt(s.getAttribute('data-index'))).sort((a, b) => a - b);
                 if (indices[1] - indices[0] !== 1) { alert("4人團班時段必須連續！"); return; }
-            } else if (slots.length === 0) {
-                alert("請選擇預約時段！"); return;
-            }
+            } else if (slots.length === 0) { alert("請選擇預約時段！"); return; }
+
+            const originalBtnContent = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>資料傳送中...</span>`;
 
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
@@ -224,7 +231,9 @@
             data.secret_key = "LongTing_940810";
 
             fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) })
-            .then(() => { document.getElementById('successModal').classList.remove('hidden'); form.reset(); updatePricing(); updateDateLimit(); });
+            .then(() => { document.getElementById('successModal').classList.remove('hidden'); form.reset(); updatePricing(); updateDateLimit(); })
+            .catch(() => alert('預約失敗，請稍後再試'))
+            .finally(() => { submitBtn.disabled = false; submitBtn.innerHTML = originalBtnContent; });
         });
 
         updateDateLimit();
