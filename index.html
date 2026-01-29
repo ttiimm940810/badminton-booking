@@ -66,7 +66,16 @@
                         <div class="space-y-2">
                             <label class="select-card block cursor-pointer"><input type="radio" name="coursePlan" value="體驗課" class="sr-only" checked><div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm"><b>🔹 體驗課</b><span class="text-indigo-600 font-bold" id="label-experience">-- /人</span></div></label>
                             <label class="select-card block cursor-pointer"><input type="radio" name="coursePlan" value="單堂課" class="sr-only"><div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm"><b>🔹 單堂課</b><span class="text-indigo-600 font-bold" id="label-single">-- /人</span></div></label>
-                            <label class="select-card block cursor-pointer"><input type="radio" name="coursePlan" value="10堂方案" class="sr-only"><div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm"><b>🔹 10 堂方案</b><span class="text-indigo-600 font-bold" id="label-ten">-- /人</span></div></label>
+                            <label class="select-card block cursor-pointer">
+                                <input type="radio" name="coursePlan" value="10堂方案" class="sr-only">
+                                <div class="p-4 rounded-2xl border-2 border-slate-100 bg-white flex justify-between items-center text-sm relative">
+                                    <div class="flex flex-col">
+                                        <b>🔹 10 堂方案</b>
+                                        <p class="text-[9px] text-slate-400 font-normal mt-0.5">「10 堂方案價格會依本次選擇的每堂小時數計算」</p>
+                                    </div>
+                                    <span class="text-indigo-600 font-bold" id="label-ten">-- /人</span>
+                                </div>
+                            </label>
                         </div>
                     </section>
 
@@ -121,8 +130,6 @@
             const plan = form.querySelector('input[name="coursePlan"]:checked').value;
             const today = new Date();
             const tomorrow = new Date();
-            
-            // 📍 修改為 +1（隔天）
             tomorrow.setDate(today.getDate() + 1);
             const minDateStr = tomorrow.toISOString().split('T')[0];
             dateInput.min = minDateStr;
@@ -168,24 +175,24 @@
             }
 
             if (size === '1on2') {
-                let trialTotal = 0, singleTotal = 0;
-                let isNight = slots.some(s => parseInt(s.getAttribute('data-fee')) === 570);
+                let trialTotal = 0, singleTotal = 0, tenTotal = 0;
+                // 📍 建議 2：改為「逐時段判斷」
                 slots.forEach(s => {
                     const fee = parseInt(s.getAttribute('data-fee'));
                     trialTotal += (fee === 370) ? 540 : 640;
                     singleTotal += (fee === 370) ? 600 : 685;
+                    tenTotal += (fee === 370) ? 5700 : 6550;
                 });
-                expL.innerText = `$${trialTotal} /人`; sglL.innerText = `$${singleTotal} /人`;
-                // 📍 修正：1on2 的 10 堂方案現在會乘上小時數
-                const tenBase = isNight ? 6550 : 5700;
-                tenL.innerText = `$${tenBase * hourCount} /人`; return;
+                expL.innerText = `$${trialTotal} /人`; 
+                sglL.innerText = `$${singleTotal} /人`;
+                tenL.innerText = `$${tenTotal} /人`; 
+                return;
             }
 
             let venueTotal = 0; slots.forEach(s => venueTotal += parseInt(s.getAttribute('data-fee')));
             const pCount = pricing[size].p;
             const tExp = (pricing[size].exp * hourCount) + (venueTotal / pCount);
             const tSgl = (pricing[size].sgl * hourCount) + (venueTotal / pCount);
-            // 📍 修正：1on1 的 10 堂方案現在會乘上小時數 (學費基數 * 小時數 + 10次場地費)
             const tTen = (pricing[size].ten * hourCount) + (venueTotal * 10 / pCount);
 
             expL.innerText = `$${Math.round(tExp)} /人`; sglL.innerText = `$${Math.round(tSgl)} /人`;
