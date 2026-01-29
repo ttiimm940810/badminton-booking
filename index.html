@@ -88,7 +88,7 @@
                     </section>
 
                     <div class="mt-8">
-                        <p class="text-[10px] text-slate-500 text-center mb-3 font-medium">※ 最早可預約日期為一週後</p>
+                        <p class="text-[10px] text-slate-500 text-center mb-3 font-medium">※ 最早可預約日期為隔天</p>
                         <button type="submit" id="submitBtn" class="w-full bg-slate-900 text-white font-bold py-5 rounded-[1.5rem] hover:bg-indigo-700 transition-all shadow-xl flex items-center justify-center">
                             <span>確認提交預約</span>
                         </button>
@@ -121,9 +121,11 @@
         function updateDateLimit() {
             const plan = form.querySelector('input[name="coursePlan"]:checked').value;
             const today = new Date();
-            const oneWeekLater = new Date();
-            oneWeekLater.setDate(today.getDate() + 7);
-            const minDateStr = oneWeekLater.toISOString().split('T')[0];
+            const tomorrow = new Date();
+            
+            // 📍 修改為 +1（隔天）
+            tomorrow.setDate(today.getDate() + 1);
+            const minDateStr = tomorrow.toISOString().split('T')[0];
             dateInput.min = minDateStr;
 
             if (plan === "體驗課" || plan === "單堂課") {
@@ -142,7 +144,6 @@
             }
         }
 
-        // 📍 修正：時段顯示改為 replace 邏輯
         function resetSlots() {
             form.querySelectorAll('input[name="timeSlot"]').forEach(cb => {
                 const label = cb.closest('label'); cb.disabled = false; label.style.opacity = "1";
@@ -187,7 +188,6 @@
             tenL.innerText = `$${Math.round(tTen)} /人`;
         }
 
-        // 📍 修正：監聽器內的時段顯示改為 replace 邏輯
         dateInput.addEventListener('change', function() {
             const selectedDate = this.value;
             if (!selectedDate) return;
