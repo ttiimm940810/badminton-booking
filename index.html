@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>龍羽球 | 智慧預約系統</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
@@ -162,6 +161,8 @@
                 expL.innerText = "-- /人"; sglL.innerText = "-- /人"; tenL.innerText = "-- /人"; return;
             }
 
+            const hourCount = slots.length;
+
             if (size === '1on4') {
                 expL.innerText = "$600 /人"; sglL.innerText = "$600 /人"; tenL.innerText = "$6000 /人"; return;
             }
@@ -175,14 +176,17 @@
                     singleTotal += (fee === 370) ? 600 : 685;
                 });
                 expL.innerText = `$${trialTotal} /人`; sglL.innerText = `$${singleTotal} /人`;
-                tenL.innerText = `$${isNight ? 6550 : 5700} /人`; return;
+                // 📍 修正：1on2 的 10 堂方案現在會乘上小時數
+                const tenBase = isNight ? 6550 : 5700;
+                tenL.innerText = `$${tenBase * hourCount} /人`; return;
             }
 
             let venueTotal = 0; slots.forEach(s => venueTotal += parseInt(s.getAttribute('data-fee')));
-            const pCount = pricing[size].p, hourCount = slots.length;
+            const pCount = pricing[size].p;
             const tExp = (pricing[size].exp * hourCount) + (venueTotal / pCount);
             const tSgl = (pricing[size].sgl * hourCount) + (venueTotal / pCount);
-            const tTen = pricing[size].ten + (venueTotal * 10 / pCount);
+            // 📍 修正：1on1 的 10 堂方案現在會乘上小時數 (學費基數 * 小時數 + 10次場地費)
+            const tTen = (pricing[size].ten * hourCount) + (venueTotal * 10 / pCount);
 
             expL.innerText = `$${Math.round(tExp)} /人`; sglL.innerText = `$${Math.round(tSgl)} /人`;
             tenL.innerText = `$${Math.round(tTen)} /人`;
